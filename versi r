@@ -1,0 +1,46 @@
+// ======== ecommerce.js - Ringan & Responsif ========
+
+// ===== Data produk =====
+const products = [
+  { id:1, name:"Produk A", price:50000, image:"https://via.placeholder.com/150", description:"Deskripsi singkat Produk A" },
+  { id:2, name:"Produk B", price:75000, image:"https://via.placeholder.com/150", description:"Deskripsi singkat Produk B" }
+];
+
+// Nomor WhatsApp
+const whatsappNumber = "6281234567890";
+
+// Format harga
+const formatPrice = p => "Rp " + p.toLocaleString("id-ID");
+
+// Render produk
+function renderProducts() {
+  const c = document.getElementById("products");
+  if(!c) return;
+  c.innerHTML = products.map(p=>`
+    <div class="p-card">
+      <img src="${p.image}" alt="${p.name}"/>
+      <h3>${p.name}</h3>
+      <p>${p.description}</p>
+      <p>${formatPrice(p.price)}</p>
+      <a href="https://wa.me/${whatsappNumber}?text=Halo,%20saya%20ingin%20membeli%20${encodeURIComponent(p.name)}" target="_blank">Beli via WhatsApp</a>
+    </div>
+  `).join("");
+}
+
+// CSS minimal responsif
+const style = document.createElement("style");
+style.innerHTML = `
+#products { display:flex; flex-wrap:wrap; gap:15px; justify-content:center; padding:10px;}
+.p-card { width:200px; border:1px solid #ddd; border-radius:8px; padding:10px; text-align:center; transition:0.2s;}
+.p-card:hover { transform:translateY(-5px);}
+.p-card img { width:100%; border-radius:6px;}
+.p-card h3{margin:10px 0 5px;}
+.p-card p{margin:5px 0;}
+.p-card a{display:inline-block; background:#25D366;color:white;padding:6px 10px;border-radius:5px;text-decoration:none; font-weight:bold;}
+.p-card a:hover{background:#128C7E;}
+@media(max-width:600px){.p-card{width:100%;}}
+`;
+document.head.appendChild(style);
+
+// Jalankan render saat halaman siap
+document.addEventListener("DOMContentLoaded", renderProducts);
